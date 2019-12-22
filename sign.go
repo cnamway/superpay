@@ -7,9 +7,16 @@ import (
 	"strings"
 )
 
-func sign(paramsKv map[string]string, key string) string {
+func sign(params map[string]string, key string) string {
+	s := mapToUrl(params, key)
+	h := md5.New()
+	h.Write([]byte(s))
+	return strings.ToUpper(hex.EncodeToString(h.Sum(nil)))
+}
+
+func mapToUrl(params map[string]string, key string) string {
 	u := url.Values{}
-	for k, v := range paramsKv {
+	for k, v := range params {
 		if v == "" {
 			continue
 		}
@@ -17,7 +24,5 @@ func sign(paramsKv map[string]string, key string) string {
 	}
 	s := u.Encode()
 	s += "&key=" + key
-	h := md5.New()
-	h.Write([]byte(s))
-	return strings.ToUpper(hex.EncodeToString(h.Sum(nil)))
+	return s
 }

@@ -15,6 +15,7 @@ type Pay struct {
 	mchId    string
 	key      string
 	query    string
+	sign     string
 }
 
 //创建订单
@@ -38,8 +39,9 @@ func (p *Pay) CreateOrder(money, desc, thirdpartyTrxId, callback, serverCallback
 		ServerCallbackUrl: serverCallbackUrl,
 	}
 	data := req.toMap()
-	p.query = sign(data, p.key)
-	rsp, err := http.Get(fmt.Sprintf("%s/testSign?%s", Url, p.query))
+	p.sign = sign(data, p.key)
+	p.query = mapToUrl(data, p.key)
+	rsp, err := http.Get(fmt.Sprintf("%s/testSign?%s&sign=%s", Url, p.query, p.sign))
 	if err != nil {
 		return nil, err
 	}
