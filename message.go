@@ -40,7 +40,7 @@ type CreateOrderResponse struct {
 }
 
 type RspData struct {
-	Success   bool        `json:"success"`
+	Success   string      `json:"success"`
 	ErrorCode json.Number `json:"error_code"`
 	Message   string      `json:"message"`
 }
