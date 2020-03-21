@@ -59,7 +59,7 @@ func TestCreateOrderRequest_toMap(t *testing.T) {
 				Callback:          tt.fields.Callback,
 				ServerCallbackUrl: tt.fields.ServerCallbackUrl,
 			}
-			if got := e.toMap(); !reflect.DeepEqual(got, tt.want) {
+			if got := e.toMap(true); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("CreateOrderRequest.toMap() = %v, want %v", got, tt.want)
 			}
 		})

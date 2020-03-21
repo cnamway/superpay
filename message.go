@@ -17,10 +17,24 @@ type CreateOrderRequest struct {
 	ServerCallbackUrl string            `json:"serverCallbackUrl"`
 }
 
-func (e CreateOrderRequest) toMap() map[string]string {
-	elem := reflect.ValueOf(&e).Elem()
-	return relFromTagJson(elem)
+//func (e CreateOrderRequest) toMap() map[string]string {
+//	elem := reflect.ValueOf(&e).Elem()
+//	return relFromTagJson(elem)
+//
+//}
 
+func (e CreateOrderRequest) toMap(skipEmpty bool) map[string]string {
+	obj1 := reflect.TypeOf(e)
+	obj2 := reflect.ValueOf(e)
+
+	var data = make(map[string]string)
+	for i := 0; i < obj1.NumField(); i++ {
+		if skipEmpty && obj2.Field(i).IsZero() {
+			continue
+		}
+		data[obj1.Field(i).Name] = obj2.Field(i).String()
+	}
+	return data
 }
 
 func relFromTagJson(elem reflect.Value) map[string]string {

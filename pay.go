@@ -38,7 +38,7 @@ func (p *Pay) CreateOrder(money, desc, thirdpartyTrxId, callback, serverCallback
 		Callback:          callback,
 		ServerCallbackUrl: serverCallbackUrl,
 	}
-	data := req.toMap()
+	data := req.toMap(true)
 	p.sign = sign(data, p.key)
 	p.query = mapToUrl(data, p.key) + "&sign=" + p.sign
 	fmt.Println(p.query)
