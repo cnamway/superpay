@@ -3,12 +3,14 @@ package superpay
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"net/url"
 	"strings"
 )
 
 func sign(params map[string]string, key string) string {
 	s := mapToUrl(params, key)
+	fmt.Println(s)
 	h := md5.New()
 	h.Write([]byte(s))
 	return strings.ToUpper(hex.EncodeToString(h.Sum(nil)))
