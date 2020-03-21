@@ -41,6 +41,7 @@ func (p *Pay) CreateOrder(money, desc, thirdpartyTrxId, callback, serverCallback
 	data := req.toMap()
 	p.sign = sign(data, p.key)
 	p.query = mapToUrl(data, p.key)
+	fmt.Println(p.query)
 	rsp, err := http.Get(fmt.Sprintf("%s/testSign?%s&sign=%s", Url, p.query, p.sign))
 	if err != nil {
 		return nil, err
